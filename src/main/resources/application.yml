@@ -1,0 +1,73 @@
+spring:
+  application:
+    name: UrbanAura
+    
+  # MySQL Configuration
+  datasource:
+    url: ${MYSQL_URL:jdbc:mysql://localhost:3307/urbanaura?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    username: ${MYSQL_USERNAME:root}
+    password: ${MYSQL_PASSWORD:admin717}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update # In production, use validate or schema.sql
+    open-in-view: false
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+
+  # MongoDB Configuration
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb+srv://urbanaura:urban%402@cluster0.dlxkvgm.mongodb.net/urbanaura?appName=Cluster0}
+
+  # AI Configuration
+  ai:
+    openai:
+      api-key: ${GROQ_API_KEY:default-key}
+      base-url: https://api.groq.com/openai
+      chat:
+        options:
+          model: llama-3.3-70b-versatile
+
+  # JSP Views Configuration
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+
+server:
+  port: 8081
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.hibernate.SQL: WARN
+    org.hibernate.orm.jdbc.bind: WARN
+    com.urbanaura: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when_authorized
+
+urbanaura:
+  security:
+    password-strength: ${URBANAURA_PASSWORD_STRENGTH:10}
+    user:
+      username: ${URBANAURA_USER_USERNAME:user}
+      password: ${URBANAURA_USER_PASSWORD:user123}
+    admin:
+      username: ${URBANAURA_ADMIN_USERNAME:admin}
+      password: ${URBANAURA_ADMIN_PASSWORD:admin123}
+  green-index:
+    aqi-weight: ${GREEN_INDEX_AQI_WEIGHT:0.6}
+    green-weight: ${GREEN_INDEX_GREEN_WEIGHT:0.4}

@@ -1,0 +1,44 @@
+URBANAURA: SMART CITY INTELLIGENCE PLATFORM
+===========================================
+FINAL PROJECT REPORT SUMMARY
+
+1. PROBLEM STATEMENT
+--------------------
+Modern homebuyers and city planners struggle to assess the true livability of a neighborhood. Traditional real estate platforms rely heavily on static property prices and generic locations, failing to account for real-time environmental factors (such as Air Quality Index), hyper-local safety metrics, and modern convenience data (such as proximity to Quick-Commerce hubs like Blinkit). This lack of dynamic data prevents buyers from making health-conscious, sustainable residential decisions.
+
+2. PROPOSED SOLUTION (URBANAURA)
+--------------------------------
+UrbanAura is an enterprise-grade, full-stack Java web application designed to bridge the gap between static real estate and dynamic city intelligence. The platform aggregates live city data to generate a proprietary "Smart Score" and "Aura Score" for individual properties. By providing real-time transparency into the environmental and infrastructural health of neighborhoods, UrbanAura empowers citizens to make data-driven, sustainable living choices.
+
+3. ALIGNMENT WITH UN SUSTAINABLE DEVELOPMENT GOALS (SDG 11)
+-----------------------------------------------------------
+UrbanAura strictly aligns with UN SDG 11: "Sustainable Cities and Communities." 
+The platform calculates a dynamic "Green Index" using a custom algorithm: (AQI_Weight * Normalized_AQI) + (Green_Weight * Proximity_To_Parks). By making ecological health a primary ranking metric, UrbanAura incentivizes sustainable urban development, highlights environmentally degraded zones requiring city intervention, and actively steers citizens toward greener, healthier neighborhoods.
+
+4. SYSTEM ARCHITECTURE & TECHNOLOGY STACK
+-----------------------------------------
+The application utilizes a robust, microservice-inspired monolithic architecture:
+- Backend Framework: Spring Boot 3.x / Spring MVC (Java 17)
+- Web Layer: Server-side rendering via JavaServer Pages (JSP) and JSTL.
+- ORM Layer: Hibernate 6.x / Spring Data JPA.
+- Polyglot Persistence Layer: 
+   * Relational Database (MySQL 8.0) for structured, ACID-compliant transactional data (Users, Properties).
+   * NoSQL Database (MongoDB 6.0) for high-velocity, schema-less data streaming (Live AQI Sensor Logs).
+- Security: Spring Security (Role-based access control with Filter/Interceptor chains).
+- Deployment: Dockerized database containers with an Embedded Apache Tomcat web server.
+
+5. KEY TECHNICAL IMPLEMENTATIONS
+--------------------------------
+- Real-Time WebSockets (CO4): Implemented a full-duplex TCP WebSocket connection that pushes live Air Quality (AQI) sensor updates directly to the client browser, eliminating the need for inefficient HTTP polling.
+- Asynchronous Multithreading (CO1): Utilized Spring's @Async and @Scheduled thread pools to fetch and simulate live sensor data in the background, ensuring the main application thread remains unblocked and highly responsive.
+- Raw JDBC Integration (CO1): While Spring Data JPA handles 95% of CRUD operations securely, raw JDBC PreparedStatements were utilized specifically in the DataLoaderService to demonstrate high-performance, bulk SQL batch insertions for master data seeding.
+
+6. DATABASE SCHEMA (ER STRUCTURE)
+---------------------------------
+The relational MySQL database strictly enforces 3rd Normal Form (3NF) across 7 minimum tables:
+- Property (1) --- (1) Locality
+- Property (1) --- (1) Smart_Metric
+- Property (1) --- (1) Quick_Commerce
+- Property (1) --- (M) Amenity
+- User (1) --- (M) Review
+- Property (1) --- (M) Review
