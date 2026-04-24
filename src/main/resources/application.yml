@@ -5,8 +5,7 @@ spring:
   # MySQL Configuration
   datasource:
     url: ${MYSQL_URL:jdbc:mysql://localhost:3307/urbanaura?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
-    username: ${MYSQL_USERNAME:root}
-    password: ${MYSQL_PASSWORD:admin717}
+  
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
